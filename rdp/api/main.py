@@ -146,6 +146,42 @@ def put_device(id, device: ApiTypes.DeviceNoID) -> ApiTypes.Device:
     except crud.NoResultFound:
         raise HTTPException(status_code=404, detail="Item not found")
 
+@app.patch("/device/{id}/")
+def update_device_name(id, device_name):
+    """PUT request to add a device. This api call is used to add a device with a name.
+
+    Args:
+        id (int): primary key of the requested device
+        device_name (string):  
+
+    Returns:
+        ApiTypes.Device: _description_
+    """
+    global crud
+    try:
+        crud.add_or_update_device(id, device_name=device_name)
+        return get_device(id)
+    except crud.NoResultFound:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+@app.post("/device/")
+def add_device(device_name:str, device_desc:str, room_id:int):
+    """PUT request to add a device. This api call is used to add a device with a name.
+
+    Args:
+        id (int): primary key of the requested device
+        device_name (string):  
+
+    Returns:
+        ApiTypes.Device: _description_
+    """
+    global crud
+    try:
+        id = crud.add_or_update_device(device_name=device_name, device_desc=device_desc, room_id=room_id)
+        return get_device(id)
+    except crud.NoResultFound:
+        raise HTTPException(status_code=404, detail="Item not found")
+
 @app.put("/room/{id}/")
 def put_room(id, room: ApiTypes.RoomNoID) -> ApiTypes.Room:
     """PUT request to add a device. This api call is used to add a device with a name.
@@ -178,6 +214,42 @@ def put_room(room: ApiTypes.RoomNoID) -> ApiTypes.Room:
     global crud
     try:
         id = crud.add_or_update_room(room_name=room.room_name, location_id=1)
+        return get_room(id)
+    except crud.NoResultFound:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+@app.patch("/room/{id}/")
+def update_room_name(id, room_name):
+    """POST request to add a room. This api call is used to add a room by autoincrementing the id.
+
+    Args:
+        id (int): primary key of the requested device
+        room_name (string): name of the string 
+
+    Returns:
+        ApiTypes.Value: desired room values
+    """
+    global crud
+    try:
+        id = crud.add_or_update_room(id, room_name=room_name)
+        return get_room(id)
+    except crud.NoResultFound:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+@app.post("/room/")
+def add_room(room_name:str, location_id:int):
+    """PUT request to add a device. This api call is used to add a device with a name.
+
+    Args:
+        id (int): primary key of the requested device
+        device_name (string):  
+
+    Returns:
+        ApiTypes.Device: _description_
+    """
+    global crud
+    try:
+        id = crud.add_or_update_room(room_name=room_name, location_id=location_id)
         return get_room(id)
     except crud.NoResultFound:
         raise HTTPException(status_code=404, detail="Item not found")
@@ -235,6 +307,42 @@ def put_locatation(id, location: ApiTypes.LocationNoID) -> ApiTypes.Location:
     global crud
     try:
         crud.add_or_update_location(id, location=location.location)
+        return get_location(id)
+    except crud.NoResultFound:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+@app.patch("/location/{id}/")
+def update_location(id, location):
+    """POST request to add a room. This api call is used to add a room by autoincrementing the id.
+
+    Args:
+        id (int): primary key of the requested device
+        room_name (string): name of the string 
+
+    Returns:
+        ApiTypes.Value: desired room values
+    """
+    global crud
+    try:
+        id = crud.add_or_update_location(id, location=location)
+        return get_location(id)
+    except crud.NoResultFound:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+@app.post("/location/")
+def add_device(location:str):
+    """PUT request to add a device. This api call is used to add a device with a name.
+
+    Args:
+        id (int): primary key of the requested device
+        device_name (string):  
+
+    Returns:
+        ApiTypes.Device: _description_
+    """
+    global crud
+    try:
+        id = crud.add_or_update_location(location=location)
         return get_location(id)
     except crud.NoResultFound:
         raise HTTPException(status_code=404, detail="Item not found")

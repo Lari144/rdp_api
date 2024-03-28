@@ -24,9 +24,6 @@ class Reader:
         thread.join()
 
     def _run(self) -> None:
-        location_id = self._crud.add_or_update_location(location_id=1, location='graz')
-        room_id = self._crud.add_or_update_room(room_id=1, room_name='room1', location_id=location_id)
-        device_id = self._crud.add_or_update_device(device_id=1, device_name='device1', device_desc='something,', room_id=room_id)
         count = 0
         while self._thread is not None:
             logger.info("A")
@@ -40,7 +37,16 @@ class Reader:
                     value_time |= test[i] << 8 * i
                 type_num = 0
                 for i in range(4):
-                    type_num |= test[i + 8] << 8 * i
+                    type_num |= test[i + 8] << 8 * i 
+                device_id = 0
+                for i in range(4):
+                    device_id |= test[i + 8] << 8 * i
+                room_id = 0
+                for i in range(4):
+                    room_id |= test[i + 8] << 8 * i
+                location_id = 0
+                for i in range(4):
+                    location_id |= test[i + 8] << 8 * i
                 value = 0.0
                 value = struct.unpack("f", test[-4::])
                 logger.debug(
@@ -50,6 +56,9 @@ class Reader:
                     value[0],
                 )
                 try:
+                    self._crud.add_or_update_location(location_id=location_id, location='graz')
+                    self._crud.add_or_update_room(room_id=room_id, room_name='room1', location_id=location_id)
+                    self._crud.add_or_update_device(device_id=device_id, device_name='device1', device_desc='something,', room_id=room_id)
                     self._crud.add_value(value_time, type_num, value[0], device_id)
                 except self._crud.IntegrityError:
                     logger.info("All Values read")
