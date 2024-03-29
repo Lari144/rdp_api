@@ -366,6 +366,16 @@ class Crud:
             stmt = select(Room)
             return session.scalars(stmt).all()
     
+    def get_rooms_id(self) -> List[int]:
+        """Get all configured devices
+
+        Returns:
+            List[Room]: List of Room objects. 
+        """
+        with Session(self._engine) as session:
+            stmt = select(Room.id)
+            return session.scalars(stmt).all()
+    
     def get_location(self, location_id: int) -> Location:
         """Get a special Location
 
@@ -387,6 +397,16 @@ class Crud:
         """
         with Session(self._engine) as session:
             stmt = select(Location)
+            return session.scalars(stmt).all()
+    
+    def get_locations_id(self) -> List[int]:
+        """Get all configured locations
+
+        Returns:
+            List[Location]: List of Location objects. 
+        """
+        with Session(self._engine) as session:
+            stmt = select(Location.id)
             return session.scalars(stmt).all()
 
     def get_device(self, device_id: int) -> Device:
@@ -410,6 +430,16 @@ class Crud:
         """
         with Session(self._engine) as session:
             stmt = select(Device)
+            return session.scalars(stmt).all()
+    
+    def get_devices_id(self) -> List[int]:
+        """Get all configured devices
+
+        Returns:
+            List[Device]: List of Device objects. 
+        """
+        with Session(self._engine) as session:
+            stmt = select(Device.id)
             return session.scalars(stmt).all()
         
     def get_value_types(self) -> List[ValueType]:

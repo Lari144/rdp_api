@@ -78,6 +78,16 @@ def get_rooms() -> List[ApiTypes.Room]:
     global crud
     return crud.get_rooms()
 
+@app.get("/room/id")
+def get_rooms_id() -> List[int]:
+    """Implements the get of all rooms
+
+    Returns:
+        List[ApiTypes.Device]: list of available rooms. 
+    """ 
+    global crud
+    return crud.get_rooms_id()
+
 @app.get("/device/{id}/")
 def get_device(id: int) -> ApiTypes.Device:
     """returns an explicit device identified by id
@@ -97,6 +107,7 @@ def get_device(id: int) -> ApiTypes.Device:
     except crud.NoResultFound:
         raise HTTPException(status_code=404, detail="Item not found")
 
+
 @app.get("/device/")
 def read_devices() -> List[ApiTypes.Device]:
     """Implements the get of all devices
@@ -106,6 +117,16 @@ def read_devices() -> List[ApiTypes.Device]:
     """ 
     global crud
     return crud.get_devices()
+
+@app.get("/device/id")
+def read_devices_id() -> List[int]:
+    """Implements the get of all devices
+
+    Returns:
+        List[ApiTypes.Device]: list of available devices. 
+    """ 
+    global crud
+    return crud.get_devices_id()
 
 @app.put("/type/{id}/")
 def put_type(id, value_type: ApiTypes.ValueTypeNoID) -> ApiTypes.ValueType:
@@ -263,6 +284,16 @@ def get_locations() -> List[ApiTypes.Location]:
     """ 
     global crud
     return crud.get_locations()
+
+@app.get("/location/id")
+def get_locations_id() -> List[int]:
+    """Implements the get of all locations
+
+    Returns:
+        List[ApiTypes.Device]: list of available locations. 
+    """ 
+    global crud
+    return crud.get_locations_id()
 
 @app.get("/value/{device_id}")
 def get_values_by_device_id(device_id: int) -> List[ApiTypes.Value]:
